@@ -20,14 +20,13 @@ const App = (props) => {
                 <Header/>
                 <Nav/>
                 <div class="app-wrapper-content">
-                    <Route path='/profile' component={Profile}/>
-                    <Route path='/dialogs' component={Dialogs}/>
-                    <Route path='/friends' component={Friends}/>
-                    <Route path='/news' component={News}/>
-                    <Route path='/music' component={Music}/>
-                    <Route path='/settings' component={Settings}/>
+                    <Route path='/profile' render={ () => <Profile postsData={props.postsData}/>}/>
+                    <Route path='/dialogs' render={ () => <Dialogs dialogsData={props.dialogsData} messagesData={props.messagesData}/>}/>
+                    <Route path='/friends' render={ () => <Friends/>}/>
+                    <Route path='/news' render={ () => <News/>}/>
+                    <Route path='/music' render={ () => <Music/>}/>
+                    <Route path='/settings' render={ () => <Settings/>}/>
                 </div>
-
                 <Footer/>
             </div>
         </BrowserRouter>
