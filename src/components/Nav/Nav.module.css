@@ -2,13 +2,22 @@
     grid-area: nav;
     background-color: red;
     padding: 20px;
-  }
+}
 
-  .item a {
+.item a {
     color: white;
     text-decoration: none;
-  }
+}
 
-  .item a.activeLink {
+.item a.activeLink {
     color: gold;
-  }
+}
+
+.someFriends {
+    display: flex;
+    justify-content: space-between;
+}
+
+.someFriends div {
+    text-align: center;
+}

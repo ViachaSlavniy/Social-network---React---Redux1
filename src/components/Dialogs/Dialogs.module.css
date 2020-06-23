@@ -7,7 +7,13 @@
     padding: 10px;
 }
 
-.dialogsColor {
+.dialogItem {
+    margin-bottom: 10px;
+}
+
+.dialogLink {
+    display: flex;
+    align-items: center;
     color: white;
     text-decoration: none;
 }
@@ -22,4 +28,10 @@
 
 .active {
     color: gold;
+}
+
+.userAva {
+    width: 50px;
+    border-radius: 30px;
+    margin-right: 10px;
 }

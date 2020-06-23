@@ -1,0 +1,13 @@
+.someFriends {
+    display: flex;
+    justify-content: space-between;
+}
+
+.someFriends div {
+    text-align: center;
+}
+
+.userAva {
+    width: 50px;
+    border-radius: 30px;
+}
