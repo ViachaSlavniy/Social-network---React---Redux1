@@ -3,20 +3,16 @@ import s from './SideBarFriends.module.css';
 import {NavLink} from "react-router-dom";
 
 const SideBarFriends = (props) => {
+
+    let sideBarFriendsElements = props.state.friends.map(sdBarFr => (<div>
+                <NavLink to="/"><img className={s.userAva} src={sdBarFr.img}/></NavLink>
+                <NavLink to="/">{sdBarFr.name}</NavLink>
+            </div>)
+    )
+
     return (
         <div className={s.someFriends}>
-            <div>
-                <NavLink to="/"><img className={s.userAva} src={props.state.friends[0].img}/></NavLink>
-                <NavLink to="/">{props.state.friends[0].name}</NavLink>
-            </div>
-            <div>
-                <NavLink to="/"><img className={s.userAva} src={props.state.friends[1].img}/></NavLink>
-                <NavLink to="/">{props.state.friends[1].name}</NavLink>
-            </div>
-            <div>
-                <NavLink to="/"><img className={s.userAva} src={props.state.friends[2].img}/></NavLink>
-                <NavLink to="/">{props.state.friends[2].name}</NavLink>
-            </div>
+            {sideBarFriendsElements}
         </div>
     )
 }
