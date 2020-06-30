@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import Header from './components/Header/Header';
 import Nav from './components/Nav/Nav';
 import Profile from './components/Profile/Profile';
@@ -21,9 +20,13 @@ const App = (props) => {
                 <Nav state={props.state.sidebar}/>
                 <div className="app-wrapper-content">
                     <Route path='/profile' render={ () => <Profile
-                        state={props.state.profilePage}
-                        newPost={props.newPost}/>}/>
-                    <Route path='/dialogs' render={ () => <Dialogs state={props.state.messagesPage}/>}/>
+                        profilePage={props.state.profilePage}
+                        newPost={props.newPost}
+                        updateNewPostText={props.updateNewPostText}/>}/>
+                    <Route path='/dialogs' render={ () => <Dialogs
+                        messagesPage={props.state.messagesPage}
+                        newMessage={props.newMessage}
+                        updateNewMessageText={props.updateNewMessageText}/>}/>
                     <Route path='/friends' render={ () => <Friends/>}/>
                     <Route path='/news' render={ () => <News/>}/>
                     <Route path='/music' render={ () => <Music/>}/>
