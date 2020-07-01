@@ -4,17 +4,17 @@ import Dialog from "./Dialog/Dialog";
 import Messages from "./Messages/Messages";
 
 const Dialogs = (props) => {
-    let dialogsElements = props.messagesPage.dialogsData.map(d => <Dialog name={d.name} dialogId={d.id} img={d.img}/>);
-    let messagesElements = props.messagesPage.messagesData.map(m => <Messages img={m.img} message={m.message}/>);
+    let dialogsElements = props.state.messagesPage.dialogsData.map(d => <Dialog name={d.name} dialogId={d.id} img={d.img}/>);
+    let messagesElements = props.state.messagesPage.messagesData.map(m => <Messages img={m.img} message={m.message}/>);
 
     let messageInfo = React.createRef();
     let addNewMessage = () => {
-        props.newMessage();
+        props.store.newMessage();
     }
 
     let onMessageChange = () => {
         let text = messageInfo.current.value;
-        props.updateNewMessageText(text);
+        props.store.updateNewMessageText(text);
     }
 
     return (
@@ -29,7 +29,7 @@ const Dialogs = (props) => {
                 <div className={s.areaWrapper}>
                     <div>
                         <textarea onChange={onMessageChange} className={s.messageArea} ref={messageInfo}
-                                  value={props.messagesPage.newMessageText} placeholder="Write message..."/>
+                                  value={props.state.messagesPage.newMessageText} placeholder="Write message..."/>
                     </div>
                     <div>
                         <button onClick={addNewMessage} className={s.messageBtn}>Send message</button>
