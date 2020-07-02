@@ -8,12 +8,16 @@ const store = {
             newPostText: 'it-kama'
         },
         messagesPage: {
-            dialogsData:    [
+            dialogsData: [
                 {id: 1, name: 'Dmitriy', img: 'https://html5css.ru/w3images/avatar2.png'},
                 {id: 2, name: 'Viacheslav', img: 'https://www.w3schools.com/howto/img_avatar.png'},
                 {id: 3, name: 'Anjela', img: 'https://html5css.ru/howto/img_avatar2.png'},
                 {id: 4, name: 'Svetlana', img: 'https://html5css.ru/w3images/avatar6.png'},
-                {id: 5, name: 'Sergey', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSeKZbcVtvtJKKvj5jnN11zgX82gll4TsnmFg&usqp=CAU'}
+                {
+                    id: 5,
+                    name: 'Sergey',
+                    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSeKZbcVtvtJKKvj5jnN11zgX82gll4TsnmFg&usqp=CAU'
+                }
 
             ],
             messagesData: [
@@ -21,7 +25,10 @@ const store = {
                 {message: "How are you?", img: 'https://www.w3schools.com/howto/img_avatar.png'},
                 {message: "Let's go to train", img: 'https://html5css.ru/howto/img_avatar2.png'},
                 {message: "I'm fine", img: 'https://html5css.ru/w3images/avatar6.png'},
-                {message: "UUUU ska", img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSeKZbcVtvtJKKvj5jnN11zgX82gll4TsnmFg&usqp=CAU'}
+                {
+                    message: "UUUU ska",
+                    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSeKZbcVtvtJKKvj5jnN11zgX82gll4TsnmFg&usqp=CAU'
+                }
             ],
             newMessageText: ''
         },
@@ -33,43 +40,45 @@ const store = {
             ]
         }
     },
+    _callSubscriber() {
+        console.log('State changed')
+    },
+
     getState() {
         return this._state;
     },
-    rerenderTree() {
-        console.log('State changed')
-    },
-    newPost() {
-        debugger;
-        let newPost = {
-            id: 3,
-            message: store._state.profilePage.newPostText,
-            likesCounts: 0
-        };
-        store._state.profilePage.postsData.push(newPost);
-        store._state.profilePage.newPostText = '';
-        store.rerenderTree(store);
-    },
-    updateNewPostText(newText) {
-        store._state.profilePage.newPostText = newText;
-        store.rerenderTree(store);
-    },
-    newMessage() {
-        let newMessage = {
-            message: store._state.messagesPage.newMessageText,
-            img: 'https://html5css.ru/w3images/avatar2.png'
-        }
-        store._state.messagesPage.messagesData.unshift(newMessage);
-        store._state.messagesPage.newMessageText = '';
-        store.rerenderTree(store);
-    },
-    updateNewMessageText(newText) {
-        store._state.messagesPage.newMessageText = newText;
-        store.rerenderTree(store);
-    },
     subscribe(observer) {
-        store.rerenderTree = observer;
+        this._callSubscriber = observer;
+    },
+
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            let newPost = {
+                id: 3,
+                message: this._state.profilePage.newPostText,
+                likesCounts: 0
+            };
+            this._state.profilePage.postsData.push(newPost);
+            this._state.profilePage.newPostText = '';
+            this._callSubscriber(this._state);
+
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText;
+            this._callSubscriber(this._state);
+        } else if (action.type === 'ADD-NEW-MESSAGE') {
+            let newMessage = {
+                message: this._state.messagesPage.newMessageText,
+                img: 'https://html5css.ru/w3images/avatar2.png'
+            }
+            this._state.messagesPage.messagesData.unshift(newMessage);
+            this._state.messagesPage.newMessageText = '';
+            this._callSubscriber(this._state);
+        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+            this._state.messagesPage.newMessageText = action.newText;
+            this._callSubscriber(this._state);
+        }
     }
+
 }
 
 export default store;
