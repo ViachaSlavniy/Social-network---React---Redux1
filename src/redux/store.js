@@ -1,7 +1,6 @@
-const ADD_NEW_MESSAGE = 'ADD-NEW-MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
-const ADD_NEW_POST = 'ADD-NEW-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
+import sidebarReducer from "./sidebar-reducer";
 
 const store = {
     _state: {
@@ -57,46 +56,15 @@ const store = {
     },
 
     dispatch(action) {
-        if (action.type === 'ADD-NEW-POST') {
-            let newPost = {
-                id: 3,
-                message: this._state.profilePage.newPostText,
-                likesCounts: 0
-            };
-            this._state.profilePage.postsData.push(newPost);
-            this._state.profilePage.newPostText = '';
-            this._callSubscriber(this._state);
-
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-            this._state.profilePage.newPostText = action.newText;
-            this._callSubscriber(this._state);
-        } else if (action.type === 'ADD-NEW-MESSAGE') {
-            let newMessage = {
-                message: this._state.messagesPage.newMessageText,
-                img: 'https://html5css.ru/w3images/avatar2.png'
-            }
-            this._state.messagesPage.messagesData.unshift(newMessage);
-            this._state.messagesPage.newMessageText = '';
-            this._callSubscriber(this._state);
-        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
-            this._state.messagesPage.newMessageText = action.newText;
-            this._callSubscriber(this._state);
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
+        this._state.messagesPage = sidebarReducer(this._state.sidebar, action);
+        this._callSubscriber(this._state);
     }
-
 }
 
-export let addNewMessageActionCreator = () => ({type: ADD_NEW_MESSAGE });
-export let onMessageChangeActionCreator = (text) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        newText: text
-    }
-};
-export let newPostsActionCreator = () => {
-    return {type: ADD_NEW_POST}
-}
-export let onPostsChangeActionCreator = (textMessage) => ({type: UPDATE_NEW_POST_TEXT, newText: textMessage})
+
+
 
 
 export default store;
