@@ -3,7 +3,7 @@ import s from './SideBarFriends.module.css';
 import {NavLink} from "react-router-dom";
 
 const SideBarFriends = (props) => {
-    let sideBarFriendsElements = props.state.sidebar.friends.map(sdBarFr => (<div>
+    let sideBarFriendsElements = props.friends.map(sdBarFr => (<div>
                 <NavLink to="/"><img className={s.userAva} src={sdBarFr.img}/></NavLink>
                 <NavLink to="/">{sdBarFr.name}</NavLink>
             </div>)
