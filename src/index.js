@@ -4,9 +4,10 @@ import React from "react";
 import App from "./App";
 import store from "./redux/redux-store";
 import {BrowserRouter} from "react-router-dom";
-import {Provider} from "./StoreContext";
+import {Provider} from "react-redux";
+// import {Provider} from "./StoreContext";
 
-let rerenderTree = (props) => {
+let rerenderTree = () => {
     ReactDOM.render(
         <React.StrictMode>
             <BrowserRouter>
