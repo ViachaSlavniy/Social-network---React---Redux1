@@ -8,6 +8,7 @@ const initialState = {
 
 
 const sidebarReducer = (state = initialState, action) => {
-    return state;
+    let stateCopy = {...state};
+    return stateCopy;
 }
 export default sidebarReducer;
