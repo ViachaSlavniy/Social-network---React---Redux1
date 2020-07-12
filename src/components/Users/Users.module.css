@@ -1,0 +1,28 @@
+.wrapper {
+    display: flex;
+    margin: 10px;
+}
+
+.userItem {
+    margin: 10px;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid darkmagenta;
+    border-radius: 30px;
+    width: 50%;
+    padding: 0 30px;
+}
+
+.followBtn {
+    display: block;
+    margin: 0 auto;
+}
+
+.avatar {
+    width: 50px;
+    border-radius: 30px;
+}
