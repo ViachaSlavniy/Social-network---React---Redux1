@@ -1,6 +1,6 @@
 .wrapper {
     display: flex;
-    margin: 10px;
+    margin: 10px auto;
 }
 
 .userItem {
@@ -25,4 +25,17 @@
 .avatar {
     width: 50px;
     border-radius: 30px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.paginationItem {
+    margin: 0 5px;
+}
+
+.selectedPage {
+    font-weight: 800;
 }
