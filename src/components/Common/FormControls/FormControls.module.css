@@ -1,0 +1,17 @@
+import React from "react";
+
+export const Input = (props) => {
+    return (
+        <div>
+            <input/>
+        </div>
+    )
+}
+
+export const Textarea = (props) => {
+    return (
+        <div>
+            <textarea />
+        </div>
+    )
+}
