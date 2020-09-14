@@ -1,3 +1,24 @@
-.descriptionBlock {
+.backgroundPicture {
+    display: block;
+    width: 100%;
+}
+
+.userInfoWrapper {
     padding: 10px;
+    display: flex;
+}
+
+.userInfo {
+    border: darkmagenta 1px solid;
+    border-radius: 30px;
+    width: 100%;
+    padding: 10px;
+}
+
+.avatarWrapper {
+    margin-right: 20px;
+}
+
+.avatar {
+    display: block;
 }

@@ -1,31 +1,55 @@
 import React from 'react';
-import s from './ProfileInfo.module.css';
-import Preloader from "../../Common/Preloader/Preloader";
 
-const ProfileInfo = (props) => {
-    if(!props.profile) {
-        return <Preloader/>
+class ProfileStatus extends React.Component {
+    state = {
+        editMode: false,
+        status: this.props.userStatus
     }
 
-    return (
-        <div>
+    activateEditMode = () => {
+        this.setState({
+            editMode: true
+        })
+    }
+
+    deactivateEditMode = () => {
+        this.setState({
+            editMode: false
+        })
+        this.props.updateStatus(this.state.status);
+    }
+
+    onStatusChange = (e) => {
+        this.setState({
+            status: e.currentTarget.value
+        })
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.userStatus !== this.props.userStatus) {
+            this.setState({
+                status: this.props.userStatus
+            });
+        }
+    }
+
+
+    render() {
+        return (
             <div>
-                <img className={s.backgroundPicture} src="https://cdn.tribloo.com/storage/app/media/_mediathumbs/tribloo-destinations-124-cropped-images-dive-norway-8-10-978-298-1526660074-9458e322565a645c2d96bdd300eba8b1.jpg"/>
-            </div>
-            <div className={s.userInfoWrapper}>
-                <div className={s.avatarWrapper}>
-                    <img className={s.avatar} src={props.profile.photos.large}/>
+                {!this.state.editMode &&
+                <div>
+                    <span onDoubleClick={this.activateEditMode}>{this.props.userStatus || '-----'}</span>
                 </div>
-                <div className={s.userInfo}>
-                    <div>Name: {props.profile.fullName}</div>
-                    <div>About me: {props.profile.aboutMe}</div>
-                    <div>Contacts: {props.profile.contacts.vk}</div>
-                    <div>Looking for a job: {props.profile.lookingForAJob ? 'Yes' : 'No'}</div>
-                    <div>Looking for a job description: {props.profile.lookingForAJobDescription}</div>
+                }
+                {this.state.editMode &&
+                <div>
+                    <input onChange={this.onStatusChange}  autoFocus={true} onBlur={this.deactivateEditMode} value={this.state.status} type="text"/>
                 </div>
+                }
             </div>
-        </div>
-    )
+        )
+    }
 }
 
-export default ProfileInfo; 
+export default ProfileStatus;

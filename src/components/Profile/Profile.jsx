@@ -1,15 +1,17 @@
 import React from 'react';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import s from './Profile.module.css';
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 
-const Profile = () => {
-
-    return <div>
+const Profile = (props) => {
+    return (
         <div>
-            <ProfileInfo/>
+            <ProfileInfo profile={props.profile}
+                         userStatus={props.userStatus}
+                         updateStatus={props.updateStatus}/>
             <MyPostsContainer/>
         </div>
-    </div>
+    )
 }
 
 export default Profile;

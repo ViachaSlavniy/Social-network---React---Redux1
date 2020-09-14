@@ -1,13 +1,24 @@
 import React from 'react';
 import s from './Header.module.css';
+import Header from "./Header";
+import {logout} from "../../redux/auth-reducer";
+import {connect} from "react-redux";
 
-const Header = () => {
-    return (
-        <header className={s.header}>
-            <div className={s.login}>Login</div>
-            <img src="https://static.rfstat.com/renderforest/images/v2/logo-homepage/flat_3.png"/>
-        </header>
-    )
+class HeaderContainer extends React.Component {
+    render() {
+        return (
+            <Header {...this.props}/>
+        )
+    }
 }
 
-export default Header;
+let mapStateToProps = (state) => {
+    return {
+        id: state.auth.id,
+        login: state.auth.login,
+        email: state.auth.email,
+        isAuth: state.auth.isAuth
+    }
+}
+
+export default connect(mapStateToProps, {logout})(HeaderContainer);

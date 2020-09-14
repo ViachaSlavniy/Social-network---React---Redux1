@@ -1,12 +1,17 @@
+import {profileAPI, usersAPI} from "../api/api";
+
 const ADD_NEW_POST = 'ADD-NEW-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_USER_STATUS = 'SET_USER_STATUS';
+const DELETE_POST = 'DELETE_POST';
 
 const initialState = {
     postsData: [
         {id: 1, message: "Hey, how are you?", likesCounts: 15},
         {id: 2, message: "It is my first post", likesCounts: 20}
     ],
-    newPostText: 'it-kama'
+    profile: null,
+    userStatus: ''
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -14,7 +19,7 @@ const profileReducer = (state = initialState, action) => {
         case ADD_NEW_POST: {
             let newPost = {
                 id: 3,
-                message: state.newPostText,
+                message: action.postText,
                 likesCounts: 0
             };
             return {
@@ -25,12 +30,23 @@ const profileReducer = (state = initialState, action) => {
             };
 
         }
-
-        case UPDATE_NEW_POST_TEXT: {
+        case SET_USER_PROFILE: {
             return {
                 ...state,
-                newPostText: action.newText
+                profile: action.profile
             };
+        }
+        case SET_USER_STATUS: {
+            return {
+                ...state,
+                userStatus: action.status
+            };
+        }
+        case DELETE_POST: {
+            return {
+                ...state,
+                postsData: [...state.postsData.filter(post => post.id !== action.postId)]
+            }
         }
 
         default:
@@ -39,11 +55,46 @@ const profileReducer = (state = initialState, action) => {
 
 }
 
-export let newPostsActionCreator = () => {
-    return {type: ADD_NEW_POST}
+// Создаем ActionCreators
+
+export let newPostsActionCreator = (postText) => {
+    return {type: ADD_NEW_POST, postText}
 }
-export let onPostsChangeActionCreator = (textMessage) => {
-    return {type: UPDATE_NEW_POST_TEXT, newText: textMessage}
+export let setUserProfile = (profile) => {
+    return {type: SET_USER_PROFILE, profile}
+}
+
+export let setUserStatus = (status) => {
+    return {type: SET_USER_STATUS, status}
+}
+
+export let deletePost = (postId) => {
+    return {type: DELETE_POST, postId}
+}
+
+// Создаем ThunkCreators
+
+export let getProfile = (userId) => {
+    return async (dispatch) => {
+        let data = await usersAPI.getProfile(userId)
+        dispatch(setUserProfile(data));
+    }
+}
+
+export let getUserStatus = (userId) => {
+    return async (dispatch) => {
+        let status = await profileAPI.getStatus(userId)
+        dispatch(setUserStatus(status));
+    }
+}
+
+export let updateUserStatus = (status) => {
+    return async (dispatch) => {
+        let response = await profileAPI.updateStatus(status)
+        if (response.data.resultCode === 0) {
+            dispatch(setUserStatus(status));
+        }
+    }
 }
 
 export default profileReducer;

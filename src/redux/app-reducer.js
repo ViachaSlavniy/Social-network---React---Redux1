@@ -1,29 +1,17 @@
-import {authAPI} from "../api/api";
-import {stopSubmit} from "redux-form";
+import {getAuthUserData} from "./auth-reducer";
 
-const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
-const SET_CAPTCHA = 'SET_CAPTCHA';
+const SET_INITIALIZED = 'SET_INITIALIZED';
 
 const initialState = {
-    userId: null,
-    login: null,
-    email: null,
-    isAuth: false,
-    captchaUrl: null
+    initialized: false
 }
 
-const authReducer = (state = initialState, action) => {
+const appReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_AUTH_USER_DATA: {
+        case SET_INITIALIZED: {
             return {
                 ...state,
-                ...action.data
-            }
-        }
-        case SET_CAPTCHA: {
-            return {
-                ...state,
-                ...action.data
+                initialized: true
             }
         }
         default:
@@ -34,59 +22,21 @@ const authReducer = (state = initialState, action) => {
 
 // Создаем ActionCreators
 
-export let setAuthUserData = (userId, login, email, isAuth) => {
-    return {type: SET_AUTH_USER_DATA, data: {userId, login, email, isAuth}}
+export let setInitialized = () => {
+    return {type: SET_INITIALIZED}
 }
-export let setCaptcha = (captchaUrl) => {
-    return {type: SET_AUTH_USER_DATA, data: {captchaUrl}}
-}
-
 // Создаем ThunkCreators
 
-export let getAuthUserData = () => {
+export let initializeApp = () => {
     return (dispatch) => {
-        authAPI.me()
-            .then(data => {
-            if(data.resultCode === 0) {
-                let {id, login, email} = data.data;
-                dispatch(setAuthUserData(id, login, email, true));
+        let promise = dispatch(getAuthUserData());
+        Promise.all([promise])
+            .then(() => {
+                dispatch(setInitialized());
             }
-        });
+        )
     }
 }
 
-export let login = (email, password, rememberMe, captcha) => {
-    return (dispatch) => {
-        authAPI.login(email, password, rememberMe, captcha)
-            .then(response => {
-                if(response.data.resultCode === 0) {
-                    dispatch(getAuthUserData())
-                }
-                if(response.data.resultCode === 1) {
-                    let message = response.data.messages ? response.data.messages[0] : 'Some error';
-                    dispatch(stopSubmit('login',{_error: message}));
-                }
-                if(response.data.resultCode === 10) {
-                    authAPI.getCaptchaUrl()
-                        .then(response => {
-                            dispatch(setCaptcha(response.url));
-                        })
-                    let message = response.data.messages ? response.data.messages[0] : 'Some error';
-                    dispatch(stopSubmit('login',{_error: message}));
-                }
-            });
-    }
-}
 
-export let logout = () => {
-    return (dispatch) => {
-        authAPI.logout()
-            .then(response => {
-                if(response.data.resultCode === 0) {
-                    dispatch(setAuthUserData(null, null, null, false));
-                }
-            });
-    }
-}
-
-export default authReducer;
+export default appReducer;

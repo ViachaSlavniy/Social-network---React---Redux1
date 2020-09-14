@@ -1,5 +1,4 @@
 const ADD_NEW_MESSAGE = 'ADD-NEW-MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 
 const initialState = {
     dialogsData: [
@@ -24,32 +23,22 @@ const initialState = {
             img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSeKZbcVtvtJKKvj5jnN11zgX82gll4TsnmFg&usqp=CAU'
         }
     ],
-    newMessageText: ''
 }
 
 const dialogsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_NEW_MESSAGE: {
-            let messageBody = state.newMessageText;
+            let messageBody = action.newMessageText;
             let newMessage = {
                 message: messageBody,
                 img: 'https://html5css.ru/w3images/avatar2.png'
             }
             return {
                 ...state,
-                newMessageText: '',
                 messagesData: [newMessage, ...state.messagesData],
             };
 
         }
-
-        case UPDATE_NEW_MESSAGE_TEXT: {
-            return {
-                ...state,
-                newMessageText: action.newText
-            };
-        }
-
         default: {
             return state;
         }
@@ -58,12 +47,7 @@ const dialogsReducer = (state = initialState, action) => {
     }
 }
 
-export let addNewMessageActionCreator = () => ({type: ADD_NEW_MESSAGE});
-export let onMessageChangeActionCreator = (text) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        newText: text
-    }
-};
+export let addNewMessage = (newMessageText) => ({type: ADD_NEW_MESSAGE, newMessageText});
+
 
 export default dialogsReducer;

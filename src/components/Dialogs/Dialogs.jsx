@@ -2,19 +2,37 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import Dialog from "./Dialog/Dialog";
 import Messages from "./Messages/Messages";
+import {Field, reduxForm} from "redux-form";
+import {Elem} from "../Common/FormControls/FormControls";
+import {maxLengthCreator, required} from "../../redux/helpers/validators";
+
+const maxLength = maxLengthCreator(50);
+
+let DialogsForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit} className={s.areaWrapper}>
+            <div>
+                <Field  name={'message'}
+                        component={Elem}
+                        placeholder="Write message..."
+                        validate={[required, maxLength]}
+                        typeField={'textarea'}/>
+            </div>
+            <div>
+                <button className={s.messageBtn}>Send message</button>
+            </div>
+        </form>
+    )
+}
+
+let DialogsReduxForm = reduxForm({form: 'dialogs'})(DialogsForm);
 
 const Dialogs = (props) => {
     let dialogsElements = props.dialogsData.map(d => <Dialog name={d.name} dialogId={d.id} img={d.img}/>);
     let messagesElements = props.messagesData.map(m => <Messages img={m.img} message={m.message}/>);
 
-    let messageInfo = React.createRef();
-    let addNewMessage = () => {
-        props.addNewMessage();
-    }
-
-    let onMessageChange = () => {
-        let text = messageInfo.current.value;
-        props.updateNewMessageText(text);
+    let addNewMessage = (values) => {
+        props.addNewMessage(values.message);
     }
 
     return (
@@ -26,18 +44,14 @@ const Dialogs = (props) => {
                 <div className={s.messagesBlock}>
                     {messagesElements}
                 </div>
-                <div className={s.areaWrapper}>
-                    <div>
-                        <textarea onChange={onMessageChange} className={s.messageArea} ref={messageInfo}
-                                  value={props.newMessageText} placeholder="Write message..."/>
-                    </div>
-                    <div>
-                        <button onClick={addNewMessage} className={s.messageBtn}>Send message</button>
-                    </div>
-                </div>
+                <DialogsReduxForm onSubmit={addNewMessage}/>
             </div>
         </div>
     )
 }
+
+
+
+
 
 export default Dialogs;

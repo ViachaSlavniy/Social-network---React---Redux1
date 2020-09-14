@@ -1,12 +1,11 @@
 import './index.css';
 import ReactDOM from "react-dom";
 import React from "react";
-import s from "./App.css"
 import App from "./App";
 import store from "./redux/redux-store";
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
-// import {Provider} from "./StoreContext";
+// import {Provider} from "./StoreContext"
 
 
 ReactDOM.render(

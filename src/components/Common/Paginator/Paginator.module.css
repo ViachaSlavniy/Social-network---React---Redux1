@@ -1,0 +1,13 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.paginationItem {
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.selectedPage {
+    font-weight: 800;
+}

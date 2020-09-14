@@ -42,13 +42,6 @@
     margin-top: 20px;
 }
 
-.messageArea {
-    padding-left: 5px;
-    width: 50%;
-    height: 50px;
-    resize: none;
-}
-
 .messageBtn {
     padding: 3px 5px;
 }

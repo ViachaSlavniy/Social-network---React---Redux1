@@ -1,17 +1,13 @@
-import React from "react";
-
-export const Input = (props) => {
-    return (
-        <div>
-            <input/>
-        </div>
-    )
+.error {
+    color: red;
 }
 
-export const Textarea = (props) => {
-    return (
-        <div>
-            <textarea />
-        </div>
-    )
+.borderError {
+    border: 2px solid red;
+}
+
+.textArea {
+    resize: none;
+    width: 50%;
+    height: 100px;
 }
