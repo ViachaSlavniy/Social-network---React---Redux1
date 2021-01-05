@@ -5,7 +5,7 @@ export const Elem = ({input, meta, ...props}) => {
     return (
         <div>
             <div>
-                {props.typeField === 'textarea'
+                {props.typeOfField === 'textarea'
                     ? <textarea className={ (meta.touched && meta.error && s.borderError) + " " + s.textArea} {...input} {...props}/>
                     : <input className={meta.touched && meta.error && s.borderError} {...input} {...props}/>}
             </div>

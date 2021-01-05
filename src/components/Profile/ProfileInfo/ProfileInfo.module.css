@@ -21,4 +21,12 @@
 
 .avatar {
     display: block;
+    max-width: 150px;
+}
+
+.socialLink {
+    padding-left: 10px;
+}
+.error {
+    color: red;
 }

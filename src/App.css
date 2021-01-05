@@ -21,4 +21,39 @@
     background-color: burlywood;
 }
 
+.header {
+  grid-area: header;
+  background-color: green;
+}
 
+.header img {
+  width: 70px;
+}
+
+.nav {
+  grid-area: nav;
+  background-color: red;
+  padding: 20px;
+}
+
+.item a {
+  color: white;
+  text-decoration: none;
+}
+
+.item a.activeLink {
+  color: gold;
+}
+
+.someFriends {
+  display: flex;
+  justify-content: space-between;
+}
+
+.someFriends div {
+  text-align: center;
+}
+
+.content img {
+  width: 100%;
+}

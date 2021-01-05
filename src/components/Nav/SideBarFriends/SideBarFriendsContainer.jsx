@@ -1,4 +1,3 @@
-import React from 'react';
 import SideBarFriends from "./SideBarFriends";
 import {connect} from "react-redux";
 

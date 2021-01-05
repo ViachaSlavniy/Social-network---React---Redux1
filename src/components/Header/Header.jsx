@@ -10,7 +10,7 @@ const Header = (props) => {
                     ? <div>{props.login} - <button onClick={props.logout}>Logout</button></div>
                     : <NavLink to={'/login'}>Login</NavLink>}
             </div>
-            <img src="https://static.rfstat.com/renderforest/images/v2/logo-homepage/flat_3.png"/>
+            <img src="https://static.rfstat.com/renderforest/images/v2/logo-homepage/flat_3.png" alt="background"/>
         </header>
     )
 }

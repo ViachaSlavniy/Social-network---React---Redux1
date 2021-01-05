@@ -1,9 +1,9 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import Nav from './components/Nav/Nav';
 import Footer from './components/Footer/Footer';
 import {Route, withRouter} from "react-router-dom";
 import News from "./components/News/News";
-import s from './App.css';
+import './App.css';
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import UsersContainer from "./components/Users/UsersContainer";

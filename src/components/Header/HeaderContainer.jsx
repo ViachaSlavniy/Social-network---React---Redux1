@@ -1,7 +1,6 @@
 import React from 'react';
-import s from './Header.module.css';
 import Header from "./Header";
-import {logout} from "../../redux/auth-reducer";
+import {logout} from "../../redux/auth-reducer"; 
 import {connect} from "react-redux";
 
 class HeaderContainer extends React.Component {

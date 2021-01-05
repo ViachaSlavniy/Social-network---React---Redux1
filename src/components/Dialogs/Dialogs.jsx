@@ -16,7 +16,7 @@ let DialogsForm = (props) => {
                         component={Elem}
                         placeholder="Write message..."
                         validate={[required, maxLength]}
-                        typeField={'textarea'}/>
+                        typeOfField={'textarea'}/>
             </div>
             <div>
                 <button className={s.messageBtn}>Send message</button>
@@ -28,8 +28,8 @@ let DialogsForm = (props) => {
 let DialogsReduxForm = reduxForm({form: 'dialogs'})(DialogsForm);
 
 const Dialogs = (props) => {
-    let dialogsElements = props.dialogsData.map(d => <Dialog name={d.name} dialogId={d.id} img={d.img}/>);
-    let messagesElements = props.messagesData.map(m => <Messages img={m.img} message={m.message}/>);
+    let dialogsElements = props.dialogsData.map(d => <Dialog key={d.id} name={d.name} dialogId={d.id} img={d.img}/>);
+    let messagesElements = props.messagesData.map(m => <Messages key={m.id} img={m.img} message={m.message}/>);
 
     let addNewMessage = (values) => {
         props.addNewMessage(values.message);

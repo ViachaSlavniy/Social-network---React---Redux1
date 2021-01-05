@@ -20,13 +20,12 @@ const LoginForm = (props) => {
             </div>
             {props.error && <div className={s.borderError + ' ' + s.error}>{props.error}</div>}
             {props.captchaUrl
-                ? <div>
+                && <div>
                     <div>
-                        <img src={props.captchaUrl}/>
+                        <img src={props.captchaUrl} alt="captcha"/>
                     </div>
                     <Field name={'captcha'} component={Elem} type="text" placeholder={'Captcha...'}/>
-                </div>
-                : null}
+                </div>}
             <div>
                 <button>Login</button>
             </div>

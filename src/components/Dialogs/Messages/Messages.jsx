@@ -5,7 +5,7 @@ const Messages = (props) => {
 
     return (
         <div className={s.message}>
-            <img className={s.userAva} src={props.img}/>{props.message}
+            <img className={s.userAva} src={props.img} alt="avatar"/>{props.message}
         </div>
     )
 }
