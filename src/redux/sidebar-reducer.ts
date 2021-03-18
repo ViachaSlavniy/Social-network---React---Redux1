@@ -1,8 +1,4 @@
-type FrinedType = {
-    id: number
-    name: string
-    img: string
-}
+import {FrinedType} from '../types/types';
 
 const initialState = {
     friends: [

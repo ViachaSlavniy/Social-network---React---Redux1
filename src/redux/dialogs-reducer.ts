@@ -1,15 +1,6 @@
-const ADD_NEW_MESSAGE = 'ADD-NEW-MESSAGE';
+import {DialogType, MessageType} from '../types/types'
 
-type DialogType = {
-    id: number
-    name: String
-    img: string
-}
-type MessageType = {
-    id: number
-    message: String
-    img: string
-}
+const ADD_NEW_MESSAGE = 'ADD-NEW-MESSAGE';
 
 const initialState = {
     dialogsData: [
@@ -39,7 +30,7 @@ const initialState = {
 
 export type InitialStateType = typeof initialState
 
-const dialogsReducer = (state = initialState, action:any):InitialStateType => {
+const dialogsReducer = (state = initialState, action:ActionsTypes):InitialStateType => {
     switch (action.type) {
         case ADD_NEW_MESSAGE: {
             let messageBody = action.newMessageText;
@@ -60,6 +51,8 @@ const dialogsReducer = (state = initialState, action:any):InitialStateType => {
         }
     }
 }
+
+type ActionsTypes = AddNewMessageActionType
 
 type AddNewMessageActionType = {
     type: typeof ADD_NEW_MESSAGE

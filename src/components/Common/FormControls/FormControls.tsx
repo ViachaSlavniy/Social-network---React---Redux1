@@ -1,11 +1,17 @@
-import React from "react";
-import s from "./FormControls.module.css"
+import React, {FC} from "react";
+import {WrappedFieldProps} from 'redux-form';
+import s from "./FormControls.module.css";
 
-export const Elem = ({input, meta, ...props}) => {
+type ElemType = WrappedFieldProps;
+type ElemOwnPropsType = {
+    typeField: string
+}
+
+export const Elem: FC<ElemType & ElemOwnPropsType> = ({input, meta, ...props}) => {
     return (
         <div>
             <div>
-                {props.typeOfField === 'textarea'
+                {props.typeField === 'textarea'
                     ? <textarea className={ (meta.touched && meta.error && s.borderError) + " " + s.textArea} {...input} {...props}/>
                     : <input className={meta.touched && meta.error && s.borderError} {...input} {...props}/>}
             </div>
