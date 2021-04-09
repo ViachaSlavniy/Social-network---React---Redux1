@@ -3,9 +3,9 @@ import {connect} from 'react-redux';
 import {
     follow,
     requestUsers,
-    setCurrentPage,
     unfollow,
 } from '../../redux/users-reducer';
+import {actions} from "../../redux/users-reducer";
 import Users from './Users';
 import Preloader from "../Common/Preloader/Preloader";
 import {
@@ -18,6 +18,8 @@ import {
 } from "../../redux/users-selectors";
 import { UserType } from '../../types/types';
 import { AppStateType } from '../../redux/redux-store';
+
+const { setCurrentPage } = actions
 
 type MapStatePropsType = {
     currentPage: number
@@ -66,7 +68,7 @@ class UsersAPIComponent extends React.Component<PropsType> {
                        users={this.props.users}
                        follow={this.props.follow}
                        unfollow={this.props.unfollow}
-                       isFollowingProgress={this.props.isFollowingProgress}
+                       followingInProgress={this.props.isFollowingProgress}
                        portionSize={this.props.portionSize}/>
 
             </>
@@ -87,12 +89,8 @@ let mapStateToProps = (state:AppStateType):MapStatePropsType => {
 }
 
 // <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState>
-const UsersContainer = connect<
-MapStatePropsType, 
-MapDispatchPropsType, 
-OwnPropsType, 
-AppStateType
->(mapStateToProps, 
+const UsersContainer = connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>
+(mapStateToProps,
     {
     setCurrentPage,
     requestUsers, 

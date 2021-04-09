@@ -1,17 +1,18 @@
 import React from 'react';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import {ProfileType} from "../../types/types";
 
-type ProfileType = {
+type ProfileComponentType = {
     isOwner: boolean
-    profile: any
+    profile: ProfileType
     userStatus: string
-    onSavePhoto: (e:any) => void
-    saveProfile: () => void
+    onSavePhoto: (file: File) => void
+    saveProfile: (formData: ProfileType, setEditMode?: (arg: boolean) => void) => void
     updateStatus: () => void
 }
 
-const Profile:React.FC<ProfileType> = (props) => {
+const Profile:React.FC<ProfileComponentType> = (props) => {
     return (
         <div>
             <ProfileInfo profile={props.profile}

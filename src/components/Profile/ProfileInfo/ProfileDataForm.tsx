@@ -3,18 +3,15 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import { ProfileType } from "../../../types/types";
-import {ProfileInfoFormValuesType} from "./ProfileInfo";
 
-type ProfileDataFormType = {
+type ProfileOwnProps = {
     profile: ProfileType
     isOwner: boolean
-    error: string
     userStatus: string
     updateStatus: (newStatus: string) => void
-    handleSubmit: () => void
 }
 
-const ProfileDataForm:React.FC<InjectedFormProps<ProfileInfoFormValuesType, ProfileDataFormType> & ProfileDataFormType> = (props) => {
+const ProfileDataForm:React.FC<InjectedFormProps<ProfileType, ProfileOwnProps> & ProfileOwnProps> = (props) => {
     return (
         <form className={s.userInfo} onSubmit={props.handleSubmit}>
             {props.isOwner && <button>Save</button>}
@@ -63,6 +60,6 @@ const ProfileDataForm:React.FC<InjectedFormProps<ProfileInfoFormValuesType, Prof
     )
 }
 
-const ProfileDataReduxForm = reduxForm<ProfileInfoFormValuesType, ProfileDataFormType>({form: 'profileInfo'})(ProfileDataForm);
+const ProfileDataReduxForm = reduxForm<ProfileType, ProfileOwnProps>({form: 'profileInfo'})(ProfileDataForm);
 
 export default ProfileDataReduxForm;

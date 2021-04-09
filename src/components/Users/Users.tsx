@@ -11,7 +11,7 @@ type UsersType = {
     totalUsersCount: number
     pageSize: number
     portionSize: number
-    isFollowingProgress: Array<number>
+    followingInProgress: Array<number>
     onPageChanged: (pageNumber:number) => void
     unfollow: (id: number) => void
     follow: (id: number) => void
@@ -36,10 +36,10 @@ const Users:React.FC<UsersType> = (props) => {
                                          alt="avatar"/>
                                 </NavLink>
                                 {u.followed
-                                    ? <button disabled={props.isFollowingProgress.some(id => id === u.id)} onClick={() => {
+                                    ? <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
                                         props.unfollow(u.id)
                                     }} className={s.followBtn}>Unfollow</button>
-                                    : <button disabled={props.isFollowingProgress.some(id => id === u.id)} onClick={() => {
+                                    : <button disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
                                         props.follow(u.id)
                                     }} className={s.followBtn}>Follow</button>}
                             </div>

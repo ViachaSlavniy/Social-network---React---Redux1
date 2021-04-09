@@ -9,8 +9,11 @@ import { DialogType, MessageType } from '../../types/types';
 
 const maxLength = maxLengthCreator(50);
 
+type PropsType = {
 
-const DialogsForm:React.FC<InjectedFormProps<DialogFormValuesType>> = (props) => {
+}
+
+const DialogsForm:React.FC<InjectedFormProps<DialogFormValuesType, PropsType> & PropsType> = (props) => {
     return (
         <form onSubmit={props.handleSubmit} className={s.areaWrapper}>
             <div>
@@ -26,8 +29,6 @@ const DialogsForm:React.FC<InjectedFormProps<DialogFormValuesType>> = (props) =>
         </form>
     )
 }
-
-
 const DialogsReduxForm = reduxForm<DialogFormValuesType>({form: 'dialogs'})(DialogsForm);
 
 type DialogsType = {

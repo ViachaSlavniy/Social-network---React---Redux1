@@ -30,7 +30,7 @@ const Nav:React.FC<NavType> = () => {
             </div>
             <div className={s.item}>
                 <NavLink to="/friends" activeClassName={s.activeLink}>Friends</NavLink>
-                <SideBarFriendsContainer/>
+                <SideBarFriendsContainer />
             </div>
         </nav>
     )

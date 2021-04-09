@@ -8,49 +8,54 @@ import {
     updateUserStatus
 } from "../../redux/profile-reducer";
 import {connect} from "react-redux";
-import {withRouter} from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 // import {withAuthRedirectComponent} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import { AppStateType } from '../../redux/redux-store';
+import {ProfileType} from "../../types/types";
 
-type PropsType = {
-    match: any
-    authorizedUserId: number
-    history: any
-    profile: any
+type MapPropsType = {
+    profile: ProfileType
     userStatus: string
-    updateProfilePhoto: (file:string) => void
+    authorizedUserId: number
+}
+type DispatchPropsType = {
+    updateProfilePhoto: (file:File) => void
     getProfile: (userId:number) => void
     getUserStatus: (userId: number) => void
     updateUserStatus: () => void
-    saveProfile: () => void
+    saveProfile: (formData: ProfileType, setEditMode?: (arg: boolean) => void) => void
 }
+type PathParamsType = {
+    userId: string
+}
+
+type PropsType = MapPropsType & DispatchPropsType & RouteComponentProps<PathParamsType>;
 
 class ProfileContainer extends React.Component<PropsType> {
 
-    onSavePhoto = (e:any) => {
-        if(e.target.files.length > 0) {
-            this.props.updateProfilePhoto(e.target.files[0]);
-        }
+    onSavePhoto = (file: File) => {
+        this.props.updateProfilePhoto(file);
     }
 
     refreshProfile() {
-        let userId = this.props.match.params.userId;
+        let userId: number | null = +this.props.match.params.userId;
         if(!userId) {
             userId = this.props.authorizedUserId;
             if(!userId) {
                 this.props.history.push('/login');
             }
+        } else {
+            this.props.getProfile(userId);
+            this.props.getUserStatus(userId);
         }
-        this.props.getProfile(userId);
-        this.props.getUserStatus(userId);
     }
 
     componentDidMount() {
         this.refreshProfile()
     }
 
-    componentDidUpdate(prevProps:any) {
+    componentDidUpdate(prevProps:PropsType) {
         if(this.props.match.params.userId !== prevProps.match.params.userId) {
             this.refreshProfile();
         }
@@ -79,7 +84,7 @@ let mapStateToProps = (state:AppStateType) => {
     }
 }
 
-export default compose(
+export default compose<React.ComponentType>(
     connect(mapStateToProps, {getProfile, getUserStatus, updateUserStatus, updateProfilePhoto, saveProfile}),
     withRouter,
     // withAuthRedirectComponent
