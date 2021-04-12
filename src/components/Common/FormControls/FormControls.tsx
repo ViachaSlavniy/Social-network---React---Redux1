@@ -4,16 +4,16 @@ import s from "./FormControls.module.css";
 
 type ElemType = WrappedFieldProps;
 type ElemOwnPropsType = {
-    typeField: string
+    typefield: string
 }
 
 export const Elem: FC<ElemType & ElemOwnPropsType> = ({input, meta, ...props}) => {
     return (
         <div>
             <div>
-                {props.typeField === 'textarea'
-                    ? <textarea className={ (meta.touched && meta.error && s.borderError) + " " + s.textArea} {...input} {...props}/>
-                    : <input className={meta.touched && meta.error && s.borderError} {...input} {...props}/>}
+                {props.typefield === 'textarea'
+                    ? <textarea className={ (meta.touched && meta.error ? s.borderError : '') + " " + s.textArea} {...input} {...props}/>
+                    : <input className={meta.touched && meta.error ? s.borderError : ''} {...input} {...props}/>}
             </div>
             <div>
                 {meta.touched && meta.error && <span className={s.error}>{meta.error}</span>}

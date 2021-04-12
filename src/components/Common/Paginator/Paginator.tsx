@@ -6,23 +6,29 @@ type PaginatorType = {
     totalItemsCount: number
     pageSize: number
     portionSize: number
-    currentPage: number
-    onPageChanged: (pageNumber:number) => void
+    currentPage?: number
+    onPageChanged?: (pageNumber:number) => void
 }
 
 
-const Paginator:React.FC<PaginatorType> = (props) => {
+const Paginator:React.FC<PaginatorType> = ({
+                                               totalItemsCount,
+                                               pageSize,
+                                               portionSize,
+                                               currentPage,
+                                               onPageChanged = x => x,
+                                           }) => {
 
-    let pagesCount = Math.ceil(props.totalItemsCount / props.pageSize);
+    let pagesCount = Math.ceil(totalItemsCount / pageSize);
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
 
-    let portionCount = Math.ceil(pagesCount / props.portionSize);
+    let portionCount = Math.ceil(pagesCount / portionSize);
     let [portionNumber, setPortionNumber] = useState(1);
-    let leftPortionPageNumber = (portionNumber - 1) * props.portionSize + 1;
-    let rightPortionPageNumber = portionNumber * props.portionSize;
+    let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
+    let rightPortionPageNumber = portionNumber * portionSize;
 
     return (
         <div className={s.pagination}>
@@ -32,8 +38,8 @@ const Paginator:React.FC<PaginatorType> = (props) => {
             {pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                 .map(p => {
                 return <span key={p}
-                             onClick={() => {props.onPageChanged(p)}}
-                             className={cn({[s.selectedPage]: props.currentPage === p}, s.paginationItem)}>{p}</span>
+                             onClick={() => {onPageChanged(p)}}
+                             className={cn({[s.selectedPage]: currentPage === p}, s.paginationItem)}>{p}</span>
             })}
 
             {portionCount > portionNumber && <button onClick={() => setPortionNumber(portionNumber + 1)}>Next</button>}

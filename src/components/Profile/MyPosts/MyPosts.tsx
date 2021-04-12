@@ -21,7 +21,7 @@ const AddPostsForm: React.FC<InjectedFormProps<PostFormValuesType, PostOwnProps>
                        component={Elem}
                        validate={[required, maxLength]}
                        placeholder={'Post message...'}
-                       typeField={'textarea'}/>
+                       typefield={'textarea'}/>
             </div>
             <div>
                 <button className={s.newPostBtn}>Add post</button>

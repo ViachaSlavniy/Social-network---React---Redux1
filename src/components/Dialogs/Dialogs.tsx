@@ -21,7 +21,7 @@ const DialogsForm:React.FC<InjectedFormProps<DialogFormValuesType, PropsType> & 
                         component={Elem}
                         placeholder="Write message..."
                         validate={[required, maxLength]}
-                        typeOfField={'textarea'}/>
+                        typefield={'textarea'}/>
             </div>
             <div>
                 <button className={s.messageBtn}>Send message</button>
