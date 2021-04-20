@@ -1,24 +1,25 @@
 import React, {ChangeEvent, useState} from 'react';
 import s from './ProfileInfo.module.css';
-import Preloader from "../../Common/Preloader/Preloader";
+import Preloader from "../../../Common/Preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
-import unknownUser from './../../../assets/images/unknown-user.png';
+import unknownUser from '../../../../assets/images/unknown-user.png';
 import ProfileDataReduxForm from "./ProfileDataForm";
-import {ContactsType, ProfileType} from '../../../types/types';
+import {ContactsType, ProfileType} from '../../../../types/types';
+import {useDispatch} from "react-redux";
+import {saveProfile} from "../../../../redux/profile-reducer";
 
 type ProfileInfoType = {
-    profile: ProfileType
+    profile: ProfileType | null
     userStatus: string
     isOwner: boolean
-    updateStatus: (status: string) => void
     onSavePhoto: (file: File) => void
-    saveProfile: (formData: ProfileType, setEditMode?: (arg: boolean) => void) => void
 }
 
 // export type ProfileInfoFormKeysType = Extract<keyof ProfileinfoFormValuesType, string>
 
 const ProfileInfo:React.FC<ProfileInfoType> = (props) => {
-    let [editMode, setEditMode] = useState(false);
+    const dispatch = useDispatch();
+    const [editMode, setEditMode] = useState(false);
 
     if(!props.profile) {
         return <Preloader/>
@@ -29,7 +30,7 @@ const ProfileInfo:React.FC<ProfileInfoType> = (props) => {
     }
 
     let onSubmit = (formData: ProfileType) => {
-        props.saveProfile(formData, setEditMode)
+        dispatch(saveProfile(formData, setEditMode));
     }
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +46,7 @@ const ProfileInfo:React.FC<ProfileInfoType> = (props) => {
             </div>
             <div className={s.userInfoWrapper}>
                 <div className={s.avatarWrapper}>
-                    <img className={s.avatar} src={props.profile.photos.large || unknownUser} alt="avatar"/>
+                    <img className={s.avatar} src={props.profile.photos ? props.profile.photos.large || unknownUser : ''} alt="avatar"/>
                     {props.isOwner && <input onChange={onMainPhotoSelected} type="file"/>}
                 </div>
                 {editMode
@@ -57,40 +58,49 @@ const ProfileInfo:React.FC<ProfileInfoType> = (props) => {
 }
 
 type ProfileDataType = {
-    profile: ProfileType
+    profile: ProfileType | null
     isOwner: boolean
     activateEditMode: () => void
     userStatus: string
-    updateStatus: (newStatus: string) => void
 }
 
 const ProfileData:React.FC<ProfileDataType> = (props) => {
     return (
         <div className={s.userInfo}>
             {props.isOwner && <button onClick={props.activateEditMode}>Edit</button>}
-            <div>
-                <div><b>Name:</b> {props.profile.fullName}</div>
-                <div>
-                    <ProfileStatusWithHooks userStatus={props.userStatus}
-                                            updateStatus={props.updateStatus}/>
-                </div>
-                <div>
-                    <b>About me:</b> {props.profile.aboutMe}
-                </div>
-                <div>
-                    <b>Looking for a job:</b> {props.profile.lookingForAJob ? 'Yes' : 'No'}
-                </div>
-                <div>
-                    <b>My professional skills:</b> {props.profile.lookingForAJobDescription}
-                </div>
-                <div>
-                    <b>Contacts:</b> {
-                    Object
-                        .keys(props.profile.contacts)
-                        .map(key => {
-                    return <Contact key={key} contactTitle={key} contactValue={props.profile.contacts[key as keyof ContactsType]}/>
-                })}</div>
-            </div>
+            {props.profile !== null
+                ? (
+                    <div>
+                        <div><b>Name:</b> {props.profile.fullName}</div>
+                        <div>
+                            <ProfileStatusWithHooks userStatus={props.userStatus} />
+                        </div>
+                        <div>
+                            <b>About me:</b> {props.profile.aboutMe}
+                        </div>
+                        <div>
+                            <b>Looking for a job:</b> {props.profile.lookingForAJob ? 'Yes' : 'No'}
+                        </div>
+                        <div>
+                            <b>My professional skills:</b> {props.profile.lookingForAJobDescription}
+                        </div>
+                        <div>
+                            <b>Contacts:</b>
+                            {
+                                Object
+                                    .keys(props.profile.contacts)
+                                    .map(key => {
+                                        return <Contact key={key}
+                                                        contactTitle={key}
+                                                        contactValue={props.profile !== null ? props.profile.contacts[key as keyof ContactsType]: ''}
+                                        />
+                                    })
+                            }
+                        </div>
+                    </div>
+                )
+                : ''
+            }
         </div>
     )
 }

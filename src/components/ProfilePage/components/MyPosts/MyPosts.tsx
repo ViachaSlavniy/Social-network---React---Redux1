@@ -2,9 +2,9 @@ import React from 'react';
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {maxLengthCreator, required} from "../../../redux/helpers/validators";
-import {Elem} from "../../Common/FormControls/FormControls";
-import {PostType} from "../../../types/types";
+import {maxLengthCreator, required} from "../../../../redux/helpers/validators";
+import {Elem} from "../../../Common/FormControls/FormControls";
+import {PostType} from "../../../../types/types";
 
 const maxLength = maxLengthCreator(30)
 

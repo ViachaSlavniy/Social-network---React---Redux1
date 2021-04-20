@@ -2,13 +2,12 @@ import s from "./ProfileInfo.module.css";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import { ProfileType } from "../../../types/types";
+import { ProfileType } from "../../../../types/types";
 
 type ProfileOwnProps = {
-    profile: ProfileType
+    profile: ProfileType | null
     isOwner: boolean
     userStatus: string
-    updateStatus: (newStatus: string) => void
 }
 
 const ProfileDataForm:React.FC<InjectedFormProps<ProfileType, ProfileOwnProps> & ProfileOwnProps> = (props) => {
@@ -24,8 +23,7 @@ const ProfileDataForm:React.FC<InjectedFormProps<ProfileType, ProfileOwnProps> &
                     </div>
                 </div>
                 <div>
-                    <ProfileStatusWithHooks userStatus={props.userStatus}
-                                            updateStatus={props.updateStatus}/>
+                    <ProfileStatusWithHooks userStatus={props.userStatus} />
                 </div>
                 <div>
                     <b>About me:</b>
@@ -46,7 +44,7 @@ const ProfileDataForm:React.FC<InjectedFormProps<ProfileType, ProfileOwnProps> &
                         <Field placeholder={'My professional skills'} name={'lookingForAJobDescription'} component={'textarea'}/>
                     </div>
                 </div>
-                <div><b>Contacts:</b> {Object.keys(props.profile.contacts).map(key => {
+                <div><b>Contacts:</b> {Object.keys(props.profile !== null ? props.profile.contacts : {}).map(key => {
                     return <div key={key}>
                         <b>{key}:
                             <div>

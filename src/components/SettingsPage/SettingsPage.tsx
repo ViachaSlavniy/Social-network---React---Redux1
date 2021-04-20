@@ -4,12 +4,10 @@ type SettingsType = {
 
 }
 
-const Settings:React.FC<SettingsType> = () => {
+export const Settings:React.FC<SettingsType> = () => {
     return (
         <div>
             Settings
         </div>
     )
 }
-
-export default Settings;
